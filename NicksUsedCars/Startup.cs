@@ -24,6 +24,7 @@ namespace NicksUsedCars
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -51,6 +52,9 @@ namespace NicksUsedCars
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
+            app.UseMvc();
+
             app.UseCookiePolicy();
 
             app.UseMvc(routes =>
