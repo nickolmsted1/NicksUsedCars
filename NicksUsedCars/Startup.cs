@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,7 +38,7 @@ namespace NicksUsedCars
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public async void ConfigureAsync(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -63,6 +64,32 @@ namespace NicksUsedCars
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            await CreateRoles(serviceProvider);
+        }
+
+        public class ApplicationUser : IdentityUser
+        {
+
+        }
+
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            // initialize roles
+            RoleManager<IdentityRole> RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            UserManager<ApplicationUser> UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            string[] roleNames = { "Admin", "Manager", "Employee", "Customer" };
+            IdentityResult roleResult;
+
+            foreach (string role in roleNames)
+            {
+                bool roleExist = await RoleManager.RoleExistsAsync(role);
+                // ensure that the role does not exist
+                if (!roleExist)
+                {
+
+                }
+            }
         }
     }
 }
