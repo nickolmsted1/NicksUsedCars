@@ -8,8 +8,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NicksUsedCars.Models;
 
 namespace NicksUsedCars
 {
@@ -21,6 +23,11 @@ namespace NicksUsedCars
         }
 
         public IConfiguration Configuration { get; }
+
+        public class ApplicationUser : IdentityUser
+        {
+
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -34,11 +41,22 @@ namespace NicksUsedCars
             });
 
 
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddRoles<IdentityRole>()
+                .AddUserManager<IdentityUser>()
+                    .AddEntityFrameworkStores<NicksUsedCarsContext>();
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
+        /*public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
+        {
+            ConfigureAsync(app, env, serviceProvider);
+        }*/
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void ConfigureAsync(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -68,16 +86,14 @@ namespace NicksUsedCars
             await CreateRoles(serviceProvider);
         }
 
-        public class ApplicationUser : IdentityUser
-        {
-
-        }
+        
 
         private async Task CreateRoles(IServiceProvider serviceProvider)
         {
             // initialize roles
             RoleManager<IdentityRole> RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            UserManager<ApplicationUser> UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            UserManager<ApplicationUser> UserManager = new UserManager<ApplicationUser>();
+                //serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             string[] roleNames = { "Admin", "Manager", "Employee", "Customer" };
             IdentityResult roleResult;
 
@@ -87,7 +103,28 @@ namespace NicksUsedCars
                 // ensure that the role does not exist
                 if (!roleExist)
                 {
+                    // create role and seed to database
+                    roleResult = await RoleManager.CreateAsync(new IdentityRole(role));
+                }
+            }
 
+            // create super user
+            var powerUser = new ApplicationUser
+            {
+                UserName = Configuration["UserSettings:UserName"],
+                Email = Configuration["UserSettings:UserEmail"]
+            };
+
+            // Ensure admin login values are in appSettings.json
+            string userPass = Configuration["UserSettings:UserPassword"];
+            var _user = await UserManager.FindByEmailAsync(Configuration["UserSettings:UserEmail"]);
+            if (_user == null)
+            {
+                var createPowerUser = await UserManager.CreateAsync(powerUser, userPass);
+                if (createPowerUser.Succeeded)
+                {
+                    // tie user to "Admin" role
+                    await UserManager.AddToRoleAsync(powerUser, "Admin");
                 }
             }
         }
