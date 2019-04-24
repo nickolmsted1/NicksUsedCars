@@ -29,6 +29,7 @@ namespace NicksUsedCars
 
         }
 
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -41,10 +42,10 @@ namespace NicksUsedCars
             });
 
 
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddRoles<IdentityRole>()
-                .AddUserManager<IdentityUser>()
-                    .AddEntityFrameworkStores<NicksUsedCarsContext>();
+                .AddUserManager<ApplicationUser>()
+                .AddEntityFrameworkStores<NicksUsedCarsContext>();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -92,7 +93,7 @@ namespace NicksUsedCars
         {
             // initialize roles
             RoleManager<IdentityRole> RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            UserManager<ApplicationUser> UserManager = new UserManager<ApplicationUser>();
+            UserManager<ApplicationUser> UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                 //serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             string[] roleNames = { "Admin", "Manager", "Employee", "Customer" };
             IdentityResult roleResult;
