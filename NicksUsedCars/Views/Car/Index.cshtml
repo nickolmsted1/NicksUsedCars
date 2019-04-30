@@ -1,0 +1,126 @@
+﻿@model IEnumerable<NicksUsedCars.Models.Vehicle>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StockNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Manufacturer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ManufacturedYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BodyStyle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TransmissionType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DriveType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExteriorColor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InteriorColor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mileage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FuelType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EngineConfiguration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EngineSize)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Horsepower)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Manufacturer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModelType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManufacturedYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BodyStyle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransmissionType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DriveType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExteriorColor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InteriorColor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mileage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FuelType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EngineConfiguration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EngineSize)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Horsepower)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
