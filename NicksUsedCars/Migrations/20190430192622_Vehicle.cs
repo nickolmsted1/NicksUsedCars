@@ -42,7 +42,7 @@ namespace NicksUsedCars.Migrations
             migrationBuilder.AddColumn<int>(
                 name: "Horsepower",
                 table: "Vehicles",
-                nullable: false,
+                nullable: true,
                 defaultValue: 0);
         }
 
