@@ -15,6 +15,8 @@ namespace NicksUsedCars.Models
         {
         }
 
+        public DbSet<Vehicle> Vehicles { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
