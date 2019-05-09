@@ -61,7 +61,7 @@ namespace NicksUsedCars.Models
 
         // Specifications of vehicle
         [StringLength(maximumLength: 50)]
-        [Display(Name ="Body Style")]
+        [Display(Name = "Body Style")]
         /// <summary>
         /// Name of style the shape of the vehicle is
         /// </summary>
@@ -94,13 +94,21 @@ namespace NicksUsedCars.Models
         /// <summary>
         /// General color of inside of car
         /// </summary>
-        public string  InteriorColor { get; set; }
+        public string InteriorColor { get; set; }
 
         [Range(minimum: 0, maximum: int.MaxValue, ErrorMessage = "Please enter a number above zero")]
         /// <summary>
         /// How many miles vehicle has been driven
         /// </summary>
         public int Mileage { get; set; }
+
+        [DataType(DataType.Currency)]
+        [Range(500, int.MaxValue)]
+        [Required]
+        /// <summary>
+        /// Price of vehicle
+        /// </summary>
+        public int Price { get; set; }
 
         //Engine Information
         [Display(Name = "Fuel Type")]

@@ -13,25 +13,32 @@ namespace NicksUsedCars.Models
 
         public string ModelType { get; set; }
 
-        public int Year { get; set; }
+        public int? MinYear { get; set; }
+
+        public int? MaxYear { get; set; }
 
         public string BodyStyle { get; set; }
 
-        public string Transmission { get; set; }
+        public Models.Transmission? TransmissionType { get; set; }
 
-        enum DriveType
-        {
-            AWD,
-            RWD,
-            FWD
-        }
+        public Models.Drive? DriveType { get; set; }
 
         public string ExteriorColor { get; set; }
 
         public string InteriorColor { get; set; }
 
-        public int Mileage { get; set; }
+        public int? MinMileage { get; set; }
 
-        public Enum FuelType { get; set; }
+        public int? MaxMileage { get; set; }
+
+        public Models.Engine? EngineType { get; set; }
+
+        public Models.Fuel? FuelType { get; set; }
+
+        public int? HighPrice { get; set; }
+
+        public int? LowPrice { get; set; }
+
+        public List<Vehicle> SearchResults { get; set; }
     }
 }
