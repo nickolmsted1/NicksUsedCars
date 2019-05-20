@@ -39,9 +39,16 @@
             <div class="form-group">
                 <label asp-for="TransmissionType" class="control-label"></label>
                 <select asp-for="TransmissionType" class="form-control">
-                    @for (int i = 0; i < Enum.GetValues(typeof(Transmission)).Length; i++)
+                    @for (int i = 0; i <= Enum.GetValues(typeof(Transmission)).Length; i++)
                     {
-                        <option value="@Enum.GetName(typeof(Transmission), i)">@Enum.GetName(typeof(Transmission), i) </option>
+                        if (i < Enum.GetValues(typeof(Transmission)).Length)
+                        {
+                            <option value="@Enum.GetName(typeof(Transmission), i)">@Enum.GetName(typeof(Transmission), i)</option>
+                        }
+                        else
+                        {
+                            <option value="a">Any</option>
+                        }
                     }
                 </select>
                 <span asp-validation-for="TransmissionType" class="text-danger"></span>
@@ -112,6 +119,8 @@
         </form>
     </div>
 </div>
+
+@await Html.PartialAsync("_CarList", Model.SearchResults)
 
 <div>
     <a asp-action="Index">Back to List</a>

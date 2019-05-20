@@ -29,7 +29,7 @@ namespace NicksUsedCars.Controllers
         public IActionResult Search(SearchCriteria search)
         {
             search.SearchResults = VehicleDb.SearchVehicle(Context, search);
-            return View();
+            return View(search);
         }
     }
 }
