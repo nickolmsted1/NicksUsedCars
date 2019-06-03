@@ -26,6 +26,26 @@ namespace NicksUsedCars.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult Create(Vehicle v)
+        {
+            if (ModelState.IsValid)
+            {
+                // add vehicle to database
+                VehicleDb.Add(v, Context);
+
+                // add message to show user vehicle was added successfully
+                ViewData["SuccessMessage"] = $"{v.ManufacturedYear} {v.Manufacturer} {v.Model} was added to database.";
+
+                // return to page to enter more vehicles
+                return View();
+            }
+            // reset Success Message
+            ViewData["SuccessMessage"] = null;
+            // return to page with errors
+            return View(v);
+        }
+
         public IActionResult Search(SearchCriteria search)
         {
             search.SearchResults = VehicleDb.SearchVehicle(Context, search);

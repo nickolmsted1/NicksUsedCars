@@ -38,27 +38,27 @@
             </div>
             <div class="form-group">
                 <label asp-for="TransmissionType" class="control-label"></label>
-                <select asp-for="TransmissionType" class="form-control">
+                <select  class="form-control">
                     @for (int i = 0; i <= Enum.GetValues(typeof(Transmission)).Length; i++)
                     {
                         if (i < Enum.GetValues(typeof(Transmission)).Length)
                         {
-                            <option value="@Enum.GetName(typeof(Transmission), i)">@Enum.GetName(typeof(Transmission), i)</option>
+                            <option value="@i">@Enum.GetName(typeof(Transmission), i)</option>
                         }
                         else
                         {
-                            <option value="a">Any</option>
+                            <option value="null">Any</option>
                         }
                     }
                 </select>
-                <span asp-validation-for="TransmissionType" class="text-danger"></span>
+                <span  class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DriveType" class="control-label"></label>
                 <select asp-for="DriveType" class="form-control">
                     @for (int i = 0; i < Enum.GetValues(typeof(Drive)).Length; i++)
                     {
-                        <option value="@Enum.GetName(typeof(Drive), i)">@Enum.GetName(typeof(Drive), i) </option>
+                        <option value="@i">@Enum.GetName(typeof(Drive), i) </option>
                     }
                 </select>
                 <span asp-validation-for="DriveType" class="text-danger"></span>
@@ -88,7 +88,7 @@
                 <select asp-for="EngineType" class="form-control" size="1">
                     @for (int i = 0; i < Enum.GetValues(typeof(Engine)).Length; i++)
                     {
-                        <option value="@Enum.GetName(typeof(Engine), i)">@Enum.GetName(typeof(Engine), i) </option>
+                        <option value="@i">@Enum.GetName(typeof(Engine), i) </option>
                     }
                 </select>
                 <span asp-validation-for="EngineType" class="text-danger"></span>
@@ -98,7 +98,7 @@
                 <select asp-for="FuelType" class="form-control">
                     @for (int i = 0; i < Enum.GetValues(typeof(Fuel)).Length; i++)
                     {
-                        <option value="@Enum.GetName(typeof(Fuel), i)">@Enum.GetName(typeof(Fuel), i) </option>
+                        <option value="@i">@Enum.GetName(typeof(Fuel), i) </option>
                     }
                 </select>
                 <span asp-validation-for="FuelType" class="text-danger"></span>
@@ -114,7 +114,7 @@
                 <span asp-validation-for="LowPrice" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Search" class="btn btn-primary" />
             </div>
         </form>
     </div>

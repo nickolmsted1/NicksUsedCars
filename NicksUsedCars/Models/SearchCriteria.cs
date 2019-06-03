@@ -26,7 +26,7 @@ namespace NicksUsedCars.Models
         [StringLength(30)]
         public string BodyStyle { get; set; }
 
-        public string TransmissionType { get; set; }
+        public Models.Transmission? TransmissionType { get; set; }
 
         public Models.Drive? DriveType { get; set; }
 

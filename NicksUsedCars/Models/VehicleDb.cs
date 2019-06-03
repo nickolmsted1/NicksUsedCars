@@ -54,12 +54,8 @@ namespace NicksUsedCars.Models
             }
             if (search.TransmissionType != null)
             {
-                if (Enum.IsDefined(typeof(Transmission), search.TransmissionType))
-                {
-                    Enum.TryParse(search.TransmissionType, out Transmission transmission);
+               vehicles = context.Vehicles.Where(p => p.TransmissionType == search.TransmissionType);
                 
-                    vehicles = context.Vehicles.Where(p => p.TransmissionType == transmission);
-                }
             }
             if (search.DriveType != null)
             {

@@ -67,14 +67,12 @@ namespace NicksUsedCars.Models
         /// </summary>
         public string BodyStyle { get; set; }
 
-        [StringLength(maximumLength: 25)]
         [Display(Name = "Transmission Type")]
         /// <summary>
         /// Type of transmission used in vehicle
         /// </summary>
         public Transmission TransmissionType { get; set; }
-
-        [StringLength(maximumLength: 3)]
+        
         [Display(Name = "Drive Type")]
         /// <summary>
         /// Which set of wheels gets the power from the engine
@@ -116,8 +114,7 @@ namespace NicksUsedCars.Models
         /// fuel type use by vehicle. Gas, diesel, electric, etc.
         /// </summary>
         public Fuel FuelType { get; set; }
-
-        [StringLength(maximumLength: 5)]
+        
         [Display(Name = "Engine Configuration")]
         /// <summary>
         /// shortened term of cylinder ayout and number of cylinders.
