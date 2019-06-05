@@ -1,0 +1,126 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model NicksUsedCars.Models.SearchCriteria
+
+<h4>SearchCriteria</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Search">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Manufacturer" class="control-label"></label>
+                <input asp-for="Manufacturer" class="form-control" />
+                <span asp-validation-for="Manufacturer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Model" class="control-label"></label>
+                <input asp-for="Model" class="form-control" />
+                <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModelType" class="control-label"></label>
+                <input asp-for="ModelType" class="form-control" />
+                <span asp-validation-for="ModelType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MinYear" class="control-label"></label>
+                <input asp-for="MinYear" class="form-control" />
+                <span asp-validation-for="MinYear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaxYear" class="control-label"></label>
+                <input asp-for="MaxYear" class="form-control" />
+                <span asp-validation-for="MaxYear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BodyStyle" class="control-label"></label>
+                <input asp-for="BodyStyle" class="form-control" />
+                <span asp-validation-for="BodyStyle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransmissionType" class="control-label"></label>
+                <select asp-for="TransmissionType" class="form-control">
+                    @for (int i = 0; i < Enum.GetValues(typeof(Transmission)).Length; i++)
+                    {
+                        <option value="@Enum.GetName(typeof(Transmission), i)">@Enum.GetName(typeof(Transmission), i) </option>
+                    }
+                </select>
+                <span asp-validation-for="TransmissionType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DriveType" class="control-label"></label>
+                <select asp-for="DriveType" class="form-control">
+                    @for (int i = 0; i < Enum.GetValues(typeof(Drive)).Length; i++)
+                    {
+                        <option value="@Enum.GetName(typeof(Drive), i)">@Enum.GetName(typeof(Drive), i) </option>
+                    }
+                </select>
+                <span asp-validation-for="DriveType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExteriorColor" class="control-label"></label>
+                <input asp-for="ExteriorColor" class="form-control" />
+                <span asp-validation-for="ExteriorColor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InteriorColor" class="control-label"></label>
+                <input asp-for="InteriorColor" class="form-control" />
+                <span asp-validation-for="InteriorColor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MinMileage" class="control-label"></label>
+                <input asp-for="MinMileage" class="form-control" />
+                <span asp-validation-for="MinMileage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaxMileage" class="control-label"></label>
+                <input asp-for="MaxMileage" class="form-control" />
+                <span asp-validation-for="MaxMileage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EngineType" class="control-label"></label>
+                <select asp-for="EngineType" class="form-control" size="1">
+                    @for (int i = 0; i < Enum.GetValues(typeof(Engine)).Length; i++)
+                    {
+                        <option value="@Enum.GetName(typeof(Engine), i)">@Enum.GetName(typeof(Engine), i) </option>
+                    }
+                </select>
+                <span asp-validation-for="EngineType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FuelType" class="control-label"></label>
+                <select asp-for="FuelType" class="form-control">
+                    @for (int i = 0; i < Enum.GetValues(typeof(Fuel)).Length; i++)
+                    {
+                        <option value="@Enum.GetName(typeof(Fuel), i)">@Enum.GetName(typeof(Fuel), i) </option>
+                    }
+                </select>
+                <span asp-validation-for="FuelType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HighPrice" class="control-label"></label>
+                <input asp-for="HighPrice" class="form-control" />
+                <span asp-validation-for="HighPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LowPrice" class="control-label"></label>
+                <input asp-for="LowPrice" class="form-control" />
+                <span asp-validation-for="LowPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

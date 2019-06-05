@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NicksUsedCars.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class UsedCars : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,6 +45,34 @@ namespace NicksUsedCars.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vehicles",
+                columns: table => new
+                {
+                    StockNumber = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Vin = table.Column<string>(maxLength: 17, nullable: true),
+                    Manufacturer = table.Column<string>(maxLength: 50, nullable: false),
+                    Model = table.Column<string>(maxLength: 50, nullable: false),
+                    ModelType = table.Column<string>(nullable: true),
+                    ManufacturedYear = table.Column<int>(nullable: false),
+                    BodyStyle = table.Column<string>(maxLength: 50, nullable: true),
+                    TransmissionType = table.Column<int>(nullable: false),
+                    DriveType = table.Column<int>(nullable: false),
+                    ExteriorColor = table.Column<string>(maxLength: 30, nullable: true),
+                    InteriorColor = table.Column<string>(maxLength: 30, nullable: true),
+                    Mileage = table.Column<int>(nullable: false),
+                    Price = table.Column<int>(nullable: false),
+                    FuelType = table.Column<int>(nullable: false),
+                    EngineConfiguration = table.Column<int>(nullable: false),
+                    EngineSize = table.Column<double>(nullable: false),
+                    Horsepower = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vehicles", x => x.StockNumber);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,6 +237,9 @@ namespace NicksUsedCars.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Vehicles");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

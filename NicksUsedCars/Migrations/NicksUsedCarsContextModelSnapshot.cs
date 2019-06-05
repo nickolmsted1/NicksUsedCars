@@ -193,19 +193,16 @@ namespace NicksUsedCars.Migrations
                     b.Property<string>("BodyStyle")
                         .HasMaxLength(50);
 
-                    b.Property<string>("DriveType")
-                        .HasMaxLength(3);
+                    b.Property<int>("DriveType");
 
-                    b.Property<string>("EngineConfiguration")
-                        .HasMaxLength(5);
+                    b.Property<int>("EngineConfiguration");
 
-                    b.Property<string>("EngineSize")
-                        .HasMaxLength(5);
+                    b.Property<double>("EngineSize");
 
                     b.Property<string>("ExteriorColor")
                         .HasMaxLength(30);
 
-                    b.Property<string>("FuelType");
+                    b.Property<int>("FuelType");
 
                     b.Property<int>("Horsepower");
 
@@ -226,8 +223,9 @@ namespace NicksUsedCars.Migrations
 
                     b.Property<string>("ModelType");
 
-                    b.Property<string>("TransmissionType")
-                        .HasMaxLength(25);
+                    b.Property<int>("Price");
+
+                    b.Property<int>("TransmissionType");
 
                     b.Property<string>("Vin")
                         .HasMaxLength(17);
