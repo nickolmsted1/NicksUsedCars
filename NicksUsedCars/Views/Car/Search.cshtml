@@ -38,17 +38,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="TransmissionType" class="control-label"></label>
-                <select  class="form-control">
+                <select asp-for="TransmissionType" class="form-control">
+                    <option value="null">Any</option>
                     @for (int i = 0; i <= Enum.GetValues(typeof(Transmission)).Length; i++)
                     {
-                        if (i < Enum.GetValues(typeof(Transmission)).Length)
-                        {
-                            <option value="@i">@Enum.GetName(typeof(Transmission), i)</option>
-                        }
-                        else
-                        {
-                            <option value="null">Any</option>
-                        }
+                        <option value="@i">@Enum.GetName(typeof(Transmission), i)</option>
                     }
                 </select>
                 <span  class="text-danger"></span>
@@ -56,10 +50,11 @@
             <div class="form-group">
                 <label asp-for="DriveType" class="control-label"></label>
                 <select asp-for="DriveType" class="form-control">
+                    <option value="null">Any</option>
                     @for (int i = 0; i < Enum.GetValues(typeof(Drive)).Length; i++)
-                    {
-                        <option value="@i">@Enum.GetName(typeof(Drive), i) </option>
-                    }
+                     {
+                         <option value="@i">@Enum.GetName(typeof(Drive), i) </option>
+                     }
                 </select>
                 <span asp-validation-for="DriveType" class="text-danger"></span>
             </div>
@@ -86,6 +81,7 @@
             <div class="form-group">
                 <label asp-for="EngineType" class="control-label"></label>
                 <select asp-for="EngineType" class="form-control" size="1">
+                    <option value="null">Any</option>
                     @for (int i = 0; i < Enum.GetValues(typeof(Engine)).Length; i++)
                     {
                         <option value="@i">@Enum.GetName(typeof(Engine), i) </option>
@@ -96,6 +92,7 @@
             <div class="form-group">
                 <label asp-for="FuelType" class="control-label"></label>
                 <select asp-for="FuelType" class="form-control">
+                    <option value="null">Any</option>
                     @for (int i = 0; i < Enum.GetValues(typeof(Fuel)).Length; i++)
                     {
                         <option value="@i">@Enum.GetName(typeof(Fuel), i) </option>

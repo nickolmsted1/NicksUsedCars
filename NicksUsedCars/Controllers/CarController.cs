@@ -18,7 +18,8 @@ namespace NicksUsedCars.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            List<Vehicle> vehicleList = VehicleDb.GetVehicleList(Context);
+            return View(vehicleList);
         }
 
         public IActionResult Create()

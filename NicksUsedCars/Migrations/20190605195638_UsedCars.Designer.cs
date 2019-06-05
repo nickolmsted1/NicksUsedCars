@@ -10,8 +10,8 @@ using NicksUsedCars.Models;
 namespace NicksUsedCars.Migrations
 {
     [DbContext(typeof(NicksUsedCarsContext))]
-    [Migration("20190430170146_CreateIdentitySchema")]
-    partial class CreateIdentitySchema
+    [Migration("20190605195638_UsedCars")]
+    partial class UsedCars
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -184,6 +184,57 @@ namespace NicksUsedCars.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("NicksUsedCars.Models.Vehicle", b =>
+                {
+                    b.Property<int>("StockNumber")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("BodyStyle")
+                        .HasMaxLength(50);
+
+                    b.Property<int>("DriveType");
+
+                    b.Property<int>("EngineConfiguration");
+
+                    b.Property<double>("EngineSize");
+
+                    b.Property<string>("ExteriorColor")
+                        .HasMaxLength(30);
+
+                    b.Property<int>("FuelType");
+
+                    b.Property<int>("Horsepower");
+
+                    b.Property<string>("InteriorColor")
+                        .HasMaxLength(30);
+
+                    b.Property<int>("ManufacturedYear");
+
+                    b.Property<string>("Manufacturer")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<int>("Mileage");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("ModelType");
+
+                    b.Property<int>("Price");
+
+                    b.Property<int>("TransmissionType");
+
+                    b.Property<string>("Vin")
+                        .HasMaxLength(17);
+
+                    b.HasKey("StockNumber");
+
+                    b.ToTable("Vehicles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
