@@ -116,7 +116,7 @@ else
                         @Html.DisplayFor(modelItem => item.Horsepower)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        <a class="btn btn-primary" asp-controller="Car" asp-action="Edit">Edit</a> |
                         @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                         @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                     </td>

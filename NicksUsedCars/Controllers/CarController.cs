@@ -52,5 +52,10 @@ namespace NicksUsedCars.Controllers
             search.SearchResults = VehicleDb.SearchVehicle(Context, search);
             return View(search);
         }
+
+        public IActionResult Edit()
+        {
+            return View();
+        }
     }
 }
