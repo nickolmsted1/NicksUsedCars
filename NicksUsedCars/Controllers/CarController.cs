@@ -18,7 +18,9 @@ namespace NicksUsedCars.Controllers
 
         public IActionResult Index()
         {
+            // get list of vehicles from database
             List<Vehicle> vehicleList = VehicleDb.GetVehicleList(Context);
+            // pass list of vehicles into view
             return View(vehicleList);
         }
 
@@ -54,6 +56,11 @@ namespace NicksUsedCars.Controllers
         }
 
         public IActionResult Edit()
+        {
+            return View();
+        }
+
+        public IActionResult AddPhotos() 
         {
             return View();
         }
