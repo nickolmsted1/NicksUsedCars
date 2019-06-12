@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -107,6 +109,17 @@ namespace NicksUsedCars.Models
         /// Price of vehicle
         /// </summary>
         public int Price { get; set; }
+
+        /// <summary>
+        /// URL of photo where it is kept in images folder
+        /// </summary>
+        public List<string> PhotoUrl { get; set; }
+
+        /// <summary>
+        /// Photo upload
+        /// </summary>
+        [NotMapped]
+        public IFormFile Photo { get; set; }
 
         //Engine Information
         [Display(Name = "Fuel Type")]
