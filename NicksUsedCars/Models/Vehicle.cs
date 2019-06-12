@@ -113,7 +113,7 @@ namespace NicksUsedCars.Models
         /// <summary>
         /// URL of photo where it is kept in images folder
         /// </summary>
-        public List<string> PhotoUrl { get; set; }
+        public string PhotoUrl { get; set; }
 
         /// <summary>
         /// Photo upload
