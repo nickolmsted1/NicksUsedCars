@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using SixLabors.ImageSharp.PixelFormats;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,8 +17,13 @@ namespace NicksUsedCars.Models
             string extension = Path.GetExtension(photo.FileName);
             if (extension == ".png" || extension == ".jpg" || extension == ".jpeg")
             {
+                
                 // TODO: set up image resizing to cut on data
                 // possibly use ImageSharp 
+                //SixLabors.ImageSharp.Image<IPixel> pic = new SixLabors.ImageSharp.Image<IPixel>()
+
+                //SixLabors.ImageSharp.Processing.ResizeOptions resize = new SixLabors.ImageSharp.Processing.ResizeOptions();
+                //resize.Size = new SixLabors.Primitives.Size;
 
                 // generate unique name for photo to avoid name collision
                 string newFileName = Guid.NewGuid().ToString();
