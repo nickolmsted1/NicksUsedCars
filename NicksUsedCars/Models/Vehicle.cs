@@ -116,6 +116,11 @@ namespace NicksUsedCars.Models
         public string PhotoUrl { get; set; }
 
         /// <summary>
+        /// URL of smaller photo when looking at list of vehicles
+        /// </summary>
+        public string SmallPhotoUrl { get; set; }
+
+        /// <summary>
         /// Photo upload
         /// </summary>
         [NotMapped]
