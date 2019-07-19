@@ -13,6 +13,9 @@ else
         <thead>
             <tr>
                 <th>
+                    <p>image</p>
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.StockNumber)
                 </th>
                 <th>
@@ -68,6 +71,9 @@ else
             {
                 <tr>
                     <td>
+                        <img src="~/@item.SmallPhotoUrl" alt="@item.GetVehicleName()" />
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.StockNumber)
                     </td>
                     <td>
@@ -116,7 +122,7 @@ else
                         @Html.DisplayFor(modelItem => item.Horsepower)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        <a class="btn btn-primary" asp-controller="Car" asp-action="Edit">Edit</a> |
                         @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                         @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                     </td>

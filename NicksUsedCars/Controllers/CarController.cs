@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using NicksUsedCars.Models;
 
@@ -9,16 +10,20 @@ namespace NicksUsedCars.Controllers
 {
     public class CarController : Controller
     {
-        private readonly NicksUsedCarsContext Context;
+        private readonly NicksUsedCarsContext _Context;
+        private readonly IHostingEnvironment _Env;
 
-        public CarController(NicksUsedCarsContext dbContext)
+        public CarController(NicksUsedCarsContext dbContext, IHostingEnvironment env)
         {
-            Context = dbContext;
+            _Context = dbContext;
+            _Env = env;
         }
 
         public IActionResult Index()
         {
-            List<Vehicle> vehicleList = VehicleDb.GetVehicleList(Context);
+            // get list of vehicles from database
+            List<Vehicle> vehicleList = VehicleDb.GetVehicleList(_Context);
+            // pass list of vehicles into view
             return View(vehicleList);
         }
 
@@ -33,7 +38,7 @@ namespace NicksUsedCars.Controllers
             if (ModelState.IsValid)
             {
                 // add vehicle to database
-                VehicleDb.Add(v, Context);
+                VehicleDb.Add(v, _Context);
 
                 // add message to show user vehicle was added successfully
                 ViewData["SuccessMessage"] = $"{v.ManufacturedYear} {v.Manufacturer} {v.Model} was added to database.";
@@ -49,8 +54,26 @@ namespace NicksUsedCars.Controllers
 
         public IActionResult Search(SearchCriteria search)
         {
-            search.SearchResults = VehicleDb.SearchVehicle(Context, search);
+            search.SearchResults = VehicleDb.SearchVehicle(_Context, search);
             return View(search);
+        }
+
+        public IActionResult Edit(Vehicle v)
+        {
+            return View();
+        }
+
+        public IActionResult AddPhotos() 
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddPhotos(Vehicle v)
+        {
+            ModelState.Remove(nameof(Vehicle.PhotoUrl));
+            VehicleHelper.AddPhoto(v, _Env, _Context);
+            return View();
         }
     }
 }

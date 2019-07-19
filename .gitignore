@@ -259,3 +259,4 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/NicksUsedCars/wwwroot/images/23018cee-b9df-47a3-864f-b4004c6b0362.jpg
