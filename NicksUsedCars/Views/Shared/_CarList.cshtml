@@ -13,6 +13,9 @@ else
         <thead>
             <tr>
                 <th>
+                    <p>image</p>
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.StockNumber)
                 </th>
                 <th>
@@ -67,6 +70,9 @@ else
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>
+                        <img src="~/@item.SmallPhotoUrl" alt="@item.GetVehicleName()" />
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.StockNumber)
                     </td>

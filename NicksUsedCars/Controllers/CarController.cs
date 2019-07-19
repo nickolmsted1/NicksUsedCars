@@ -58,18 +58,21 @@ namespace NicksUsedCars.Controllers
             return View(search);
         }
 
-        public IActionResult Edit()
+        public IActionResult Edit(Vehicle v)
         {
             return View();
         }
 
-        public IActionResult AddPhotos(Vehicle v) 
+        public IActionResult AddPhotos() 
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddPhotos(Vehicle v)
         {
             ModelState.Remove(nameof(Vehicle.PhotoUrl));
-            if (ModelState.IsValid)
-            {
-                VehicleHelper.AddPhoto(v, _Env);
-            }
+            VehicleHelper.AddPhoto(v, _Env, _Context);
             return View();
         }
     }

@@ -14,6 +14,13 @@ namespace NicksUsedCars.Models
             return v;
         }
 
+        public static Vehicle Edit(Vehicle v, NicksUsedCarsContext context)
+        {
+            context.Vehicles.Update(v);
+            context.SaveChanges();
+            return v;
+        }
+
         public static List<Vehicle> GetVehicleList(NicksUsedCarsContext context)
         {
             List<Vehicle> vehicleList = context.Vehicles.ToList();
