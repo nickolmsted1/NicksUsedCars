@@ -9,10 +9,11 @@
 <h4>Vehicle</h4>
 <hr />
 
-<form asp-action="Edit">
+<form asp-action="Edit" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="row">
         <div class="col-md-4">
+            <input type="hidden" asp-for="StockNumber"/>
             <div class="form-group">
                 <label asp-for="Vin" class="control-label"></label>
                 <input asp-for="Vin" class="form-control" />
@@ -94,6 +95,10 @@
                 <span asp-validation-for="Horsepower" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Photo" class="control-label"></label>
+                <input type="file" name="photo" />
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </div>
@@ -102,7 +107,7 @@
 
 
 <div>
-    <a asp-action="AddPhotos" class="btn btn-primary">Add Photo</a>
+    <a asp-action="AddPhotos" asp-route-id="@Model.StockNumber" class="btn btn-primary">Add Photo</a>
     <a asp-action="Index">Back to List</a>
 </div>
 

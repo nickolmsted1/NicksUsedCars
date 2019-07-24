@@ -16,8 +16,14 @@ namespace NicksUsedCars.Models
 
         public static Vehicle Edit(Vehicle v, NicksUsedCarsContext context)
         {
-            context.Vehicles.Update(v);
+            context.Update(v);
             context.SaveChanges();
+            return v;
+        }
+
+        public static Vehicle GetSingleVehicle(int id, NicksUsedCarsContext context)
+        {
+            Vehicle v = context.Vehicles.Where(p => p.StockNumber == id).Single();
             return v;
         }
 

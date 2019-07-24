@@ -122,7 +122,7 @@ else
                         @Html.DisplayFor(modelItem => item.Horsepower)
                     </td>
                     <td>
-                        <a class="btn btn-primary" asp-controller="Car" asp-action="Edit">Edit</a> |
+                        <a class="btn btn-primary" asp-controller="Car" asp-action="Edit" asp-route-id="@item.StockNumber">Edit</a> |
                         @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                         @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                     </td>

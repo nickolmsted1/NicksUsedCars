@@ -63,12 +63,12 @@ namespace NicksUsedCars.Models
                     using (FileStream fs = new FileStream(filePath, FileMode.Create))
                     {
                         await photo.CopyToAsync(fs);
-                        using (FileStream newFs = new FileStream(smallFilePath, FileMode.Create))
-                        {
-                            await photo.CopyToAsync(fs);
-                        }
+                        
                     }
-
+                    using (FileStream newFs = new FileStream(smallFilePath, FileMode.Create))
+                    {
+                        await photo.CopyToAsync(newFs);
+                    }
                     
                 }
             }

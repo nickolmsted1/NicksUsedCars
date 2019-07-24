@@ -58,14 +58,39 @@ namespace NicksUsedCars.Controllers
             return View(search);
         }
 
-        public IActionResult Edit(Vehicle v)
+        public IActionResult Edit(int id)
         {
-            return View();
+            Vehicle v = VehicleDb.GetSingleVehicle(id, _Context);
+
+            return View(v);
         }
 
-        public IActionResult AddPhotos() 
+        [HttpPost]
+        public IActionResult Edit(Vehicle v)
         {
-            return View();
+            if (v.Photo != null)
+            {
+                ModelState.Remove(nameof(Vehicle.PhotoUrl));
+                VehicleHelper.AddPhoto(v, _Env, _Context);
+            }
+
+            VehicleDb.Edit(v, _Context);
+            if (v != null)
+            {
+                ViewData["UpdateMessage"] = v.GetVehicleName() + " has been updated.";
+            }
+            else
+            {
+                ViewData["UpdateMessage"] = "Update failed.";
+            }
+            return View(v);
+        }
+
+        public IActionResult AddPhotos(int id) 
+        {
+            Vehicle v = VehicleDb.GetSingleVehicle(id, _Context);
+
+            return View(v);
         }
 
         [HttpPost]
