@@ -23,6 +23,8 @@ namespace NicksUsedCars.Models
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+            builder.Entity<IdentityUser>().Property(typeof(string), "FirstName").IsRequired(true).HasMaxLength(30);
+            builder.Entity<IdentityUser>().Property(typeof(string), "LastName").IsRequired(true).HasMaxLength(30);
         }
     }
 }
