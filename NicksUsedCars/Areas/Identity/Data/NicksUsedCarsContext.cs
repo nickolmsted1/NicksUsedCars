@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace NicksUsedCars.Models
 {
@@ -26,6 +27,23 @@ namespace NicksUsedCars.Models
         public string LastName { get; set; }
 
         
+    }
+
+    public class MyUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<ApplicationUser>
+    {
+        public MyUserClaimsPrincipalFactory(
+            UserManager<ApplicationUser> userManager,
+            IOptions<IdentityOptions> optionsAccessor) : base(userManager, optionsAccessor)
+        {
+
+        }
+
+        protected override async Task<ClaimsIdentity> GenerateClaimsAsync(ApplicationUser user)
+        {
+            var identity = await base.GenerateClaimsAsync(user);
+            identity.AddClaim(new Claim("FullName", user.FirstName + " " + user.LastName ?? "Valued User"));
+            return identity;
+        }
     }
 
     //public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
