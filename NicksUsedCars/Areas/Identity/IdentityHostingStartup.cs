@@ -19,7 +19,7 @@ namespace NicksUsedCars.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("NicksUsedCarsContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>()
+                services.AddDefaultIdentity<ApplicationUser>()
                     .AddEntityFrameworkStores<NicksUsedCarsContext>();
             });
         }

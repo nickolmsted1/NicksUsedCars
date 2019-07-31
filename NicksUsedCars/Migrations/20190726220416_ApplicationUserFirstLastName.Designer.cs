@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NicksUsedCars.Models;
 
 namespace NicksUsedCars.Migrations
 {
     [DbContext(typeof(NicksUsedCarsContext))]
-    partial class NicksUsedCarsContextModelSnapshot : ModelSnapshot
+    [Migration("20190726220416_ApplicationUserFirstLastName")]
+    partial class ApplicationUserFirstLastName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
