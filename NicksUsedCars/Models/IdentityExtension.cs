@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -15,6 +16,12 @@ namespace NicksUsedCars.Models
             var claim2 = ((ClaimsIdentity)identity).FindFirst("LastName");
 
             return (claim != null && claim2 != null) ? claim.Value + " " + claim2.Value : "Valued User";
+        }
+        
+        public static ApplicationUser GetUser(NicksUsedCarsContext context, string id)
+        {
+            ApplicationUser user = context.Users.Where(u => u.Id == id).Single();
+            return user;
         }
 
         public static List<ApplicationUser> SearchUsers(NicksUsedCarsContext context, UserSearch searchResults)
@@ -33,10 +40,25 @@ namespace NicksUsedCars.Models
                             where user.Email == searchResults.Email
                             select user;
                 }
-
+                //users = users.ToList();
+                //for (int i = 0; i < users.Count(); i++)
+                //{
+                //    ApplicationUser name;
+                //}
                 return users.ToList();
             }
             return null;
+        }
+
+        public static async Task<List<string>> GetRoles(UserManager<ApplicationUser> userManager, ApplicationUser user)
+        {
+            List<string> roles = (List<string>) await userManager.GetRolesAsync(user);
+            return roles;
+        }
+
+        public static void ChangeRole(ApplicationUser user, string roleId)
+        {
+
         }
     }
 }

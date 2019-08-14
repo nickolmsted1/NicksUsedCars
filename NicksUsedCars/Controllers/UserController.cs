@@ -25,18 +25,41 @@ namespace NicksUsedCars.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public IActionResult SetRoles()
         {
-            return View();
+            UserSearch search = new UserSearch
+            {
+                UserSearchResults = new List<ApplicationUser>()
+            };
+            return View(search);
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public IActionResult SetRoles(UserSearch searchParams)
         {
-            List<ApplicationUser> users = IdentityExtension.SearchUsers(_Context, searchParams);
-            return View(users);
+            searchParams.UserSearchResults = IdentityExtension.SearchUsers(_Context, searchParams);
+            return View(searchParams);
+        }
+
+        public IActionResult ChangeUserRole(string id)
+        {
+            var user = IdentityExtension.GetUser(_Context, id);
+            if (user != null) {
+                var userRoleViewModel = new UserRoleViewModel
+                {
+                    UserId = id,
+                    FullName = user.FirstName + user.LastName
+                };
+                return View(userRoleViewModel);
+            }
+            else
+            {
+                ViewBag.NullUser = "User not found.";
+                return RedirectToAction("SetRoles");
+            }
+            
         }
     }
 }

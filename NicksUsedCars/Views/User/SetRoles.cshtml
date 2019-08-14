@@ -27,3 +27,8 @@
         </div>
     </form>
 </div>
+@await Html.PartialAsync("_UserSearch", Model.UserSearchResults)
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
