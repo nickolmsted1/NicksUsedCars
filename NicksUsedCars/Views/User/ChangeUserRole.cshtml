@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model NicksUsedCars.Models.UserRoleViewModel
+@inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<IdentityRole> roleManager
+@{
+    ViewData["Title"] = "ChangeUserRole";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Change User Role</h1>
+
+@if (ViewBag.RoleError != null)
+{
+    <h3 class="text-danger">@ViewBag.RoleError</h3>
+}
+@if (ViewBag.RoleChangeSuccess != null)
+{
+    <h3 class="text-success">@ViewBag.RoleChangeSuccess</h3>
+}
+@if (ViewBag.RoleChangeFail != null)
+{
+    <h3 class="text-danger">@ViewBag.RoleChangeFail</h3>
+}
+@if (ViewBag.RoleChangeError != null)
+{
+    <h3 class="text-danger">@ViewBag.RoleChangeError</h3>
+}
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ChangeUserRole">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserId" />
+            <h4>Full Name</h4>
+            @{ var user = await UserManager.FindByIdAsync(Model.UserId);}
+            <p>@user.FirstName @user.LastName</p>
+            <br />
+            <h4>Choose new role</h4>
+            <div class="form-group">
+                <select asp-for="RoleName" class="form-control" size="1">
+                    
+                    @{ var roleList = roleManager.Roles.ToList(); }
+                    @for (int i = 0; i < roleList.Count; i++)
+                     {
+                        <option value="@roleList[i]">@roleList[i]</option>
+                     }
+                    
+                </select>
+                <span asp-validation-for="RoleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="SetRoles">Back to List</a>
+</div>
+

@@ -1,0 +1,54 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<NicksUsedCars.Models.ApplicationUser>
+@inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<IdentityRole> roleManager
+
+@if (Model == null || Model.Count() == 0)
+{
+    <p>No users match search results</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <p>Name</p>
+                </th>
+                <th>
+                   <p>@Html.DisplayNameFor(model => model.Email)</p>
+                </th>
+                <th>
+                    <p>Role</p>
+                </th>
+                <th>
+                    <p>New Role</p>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @{ var roles = await IdentityExtension.GetRoles(UserManager, item); }
+                        @for (int i = 0; i < roles.Count ; i++)
+                        {
+                            <p>@roles[i]</p>
+                        }
+
+                    </td>
+                    <td>
+                        <a class="btn btn-dark" asp-controller="User" asp-action="ChangeUserRole" asp-route-id="@item.Id">Change Role</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
