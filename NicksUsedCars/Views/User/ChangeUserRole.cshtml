@@ -1,32 +1,52 @@
-﻿@model NicksUsedCars.Models.UserRoleViewModel
-
+﻿@using Microsoft.AspNetCore.Identity
+@model NicksUsedCars.Models.UserRoleViewModel
+@inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<IdentityRole> roleManager
 @{
     ViewData["Title"] = "ChangeUserRole";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>ChangeUserRole</h1>
+<h1>Change User Role</h1>
 
-<h4>UserRoleViewModel</h4>
+@if (ViewBag.RoleError != null)
+{
+    <h3 class="text-danger">@ViewBag.RoleError</h3>
+}
+@if (ViewBag.RoleChangeSuccess != null)
+{
+    <h3 class="text-success">@ViewBag.RoleChangeSuccess</h3>
+}
+@if (ViewBag.RoleChangeFail != null)
+{
+    <h3 class="text-danger">@ViewBag.RoleChangeFail</h3>
+}
+@if (ViewBag.RoleChangeError != null)
+{
+    <h3 class="text-danger">@ViewBag.RoleChangeError</h3>
+}
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="ChangeUserRole">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserId" />
+            <h4>Full Name</h4>
+            @{ var user = await UserManager.FindByIdAsync(Model.UserId);}
+            <p>@user.FirstName @user.LastName</p>
+            <br />
+            <h4>Choose new role</h4>
             <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RoleName" class="control-label"></label>
-                <input asp-for="RoleName" class="form-control" />
+                <select asp-for="RoleName" class="form-control" size="1">
+                    
+                    @{ var roleList = roleManager.Roles.ToList(); }
+                    @for (int i = 0; i < roleList.Count; i++)
+                     {
+                        <option value="@roleList[i]">@roleList[i]</option>
+                     }
+                    
+                </select>
                 <span asp-validation-for="RoleName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FullName" class="control-label"></label>
-                <input asp-for="FullName" class="form-control" />
-                <span asp-validation-for="FullName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -36,6 +56,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="SetRoles">Back to List</a>
 </div>
 

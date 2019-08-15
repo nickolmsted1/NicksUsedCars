@@ -44,18 +44,8 @@ else
                         }
 
                     </td>
-                    @*<td>
-                        <select name="NewUserRole" >
-                            @{ var roleList = roleManager.Roles.ToList(); }
-                            @for (int i = 0; i < roleList.Count; i++)
-                            {
-                                <option value="@roleList[i]">@roleList[i]</option>
-                            }
-                        </select>
-                    </td>*@
                     <td>
-                        @*<a class="btn btn-dark" onclick="@IdentityExtension.ChangeRole(item, await roleManager.GetRoleIdAsync()))">Change Role</a>*@
-                        <a class="btn btn-dark" asp-area="EditUserRole" asp-controller="User"asp-route-id="@item.Id">Change Role</a>
+                        <a class="btn btn-dark" asp-controller="User" asp-action="ChangeUserRole" asp-route-id="@item.Id">Change Role</a>
                     </td>
                 </tr>
             }

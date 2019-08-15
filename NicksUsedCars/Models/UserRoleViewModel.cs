@@ -12,5 +12,7 @@ namespace NicksUsedCars.Models
         public string RoleName { get; set; }
 
         public string FullName { get; set; }
+
+        public List<string> OldRoles { get; set; }
     }
 }
