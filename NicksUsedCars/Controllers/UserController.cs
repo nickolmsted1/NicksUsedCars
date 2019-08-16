@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NicksUsedCars.Areas.Identity.Pages.Account;
 using NicksUsedCars.Models;
 
 namespace NicksUsedCars.Controllers
@@ -30,20 +31,27 @@ namespace NicksUsedCars.Controllers
         {
             return View();
         }
-
-        //[Authorize(Roles = "Admin")]
-        public IActionResult SetRoles()
+        
+        public async Task<IActionResult> SetRoles()
         {
-            // sets up blank search result that will be used
-            UserSearch search = new UserSearch
+            // decides if user is admin
+            if (await IdentityExtension.IsAdmin(_UserManager, await _UserManager.GetUserAsync(User)))
             {
-                UserSearchResults = new List<ApplicationUser>()
-            };
-            return View(search);
+                // sets up blank search result that will be used
+                UserSearch search = new UserSearch
+                {
+                    UserSearchResults = new List<ApplicationUser>()
+                };
+                return View(search);
+            }
+            else
+            {
+                // sends user to access denied page if not admin
+                return Redirect("~/Identity/Account/AccessDenied");
+            }
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
         public IActionResult SetRoles(UserSearch searchParams)
         {
             // uses search parameters to find user to change role of
@@ -53,28 +61,37 @@ namespace NicksUsedCars.Controllers
 
         public async Task<IActionResult> ChangeUserRole(string id)
         {
-            // uses id to get user from db
-            var user = IdentityExtension.GetUser(_Context, id);
-            // only goes through if user exists in db
-            if (user != null) {
-                // gets all roles user is in (should only be 1)
-                var roles = await IdentityExtension.GetRoles(_UserManager, user);
-                // sets new object to make role change easier
-                var userRoleViewModel = new UserRoleViewModel
+            // decides if user is an admin
+            if (await IdentityExtension.IsAdmin(_UserManager, await _UserManager.GetUserAsync(User)))
+            {
+                // uses id to get user from db
+                var user = IdentityExtension.GetUser(_Context, id);
+                // only goes through if user exists in db
+                if (user != null)
                 {
-                    UserId = id,
-                    FullName = user.FirstName + user.LastName,
-                    OldRoles = roles
-                };
-                return View(userRoleViewModel);
+                    // gets all roles user is in (should only be 1)
+                    var roles = await IdentityExtension.GetRoles(_UserManager, user);
+                    // sets new object to make role change easier
+                    var userRoleViewModel = new UserRoleViewModel
+                    {
+                        UserId = id,
+                        FullName = user.FirstName + user.LastName,
+                        OldRoles = roles
+                    };
+                    return View(userRoleViewModel);
+                }
+                // if user was not found in db
+                else
+                {
+                    ViewBag.NullUser = "User not found.";
+                    return RedirectToAction("SetRoles");
+                }
             }
-            // if user was not found in db
             else
             {
-                ViewBag.NullUser = "User not found.";
-                return RedirectToAction("SetRoles");
+                // redirects to Access Denied page built into Identity
+                return Redirect("~/Identity/Account/AccessDenied");
             }
-            
         }
 
         [HttpPost]
@@ -117,8 +134,7 @@ namespace NicksUsedCars.Controllers
                     {
                         removeRoleResult = await _UserManager.RemoveFromRoleAsync(user, newUserRole.OldRoles[i]);
                     }
-
-                    
+                    // adds user to new role selected
                     newRoleResult = await _UserManager.AddToRoleAsync(user, newUserRole.RoleName);
                 }
                 else
@@ -127,8 +143,6 @@ namespace NicksUsedCars.Controllers
                     newRoleResult = await _UserManager.AddToRoleAsync(user, newUserRole.RoleName);
                     removeRoleResult = newRoleResult;
                 }
-
-                
 
                 // return success message to page
                 if (removeRoleResult.Succeeded && newRoleResult.Succeeded && await _UserManager.IsInRoleAsync(user, newUserRole.RoleName))

@@ -56,9 +56,22 @@ namespace NicksUsedCars.Models
             return roles;
         }
 
-        public static void ChangeRole(ApplicationUser user, string roleId)
+        public static async Task<bool> IsAdmin(UserManager<ApplicationUser> userManager, ApplicationUser user)
         {
+            var isAdmin = await userManager.IsInRoleAsync(user, "Admin");
+            return isAdmin;
+        }
 
+        public static async Task<bool> IsManagerOrAbove(UserManager<ApplicationUser> userManager, ApplicationUser user)
+        {
+            var isManager = await userManager.IsInRoleAsync(user, "Manager");
+            return isManager || await IsAdmin(userManager, user);
+        }
+
+        public static async Task<bool> IsEmployeeOrAbove(UserManager<ApplicationUser> userManager, ApplicationUser user)
+        {
+            var isEmployee = await userManager.IsInRoleAsync(user, "Employee");
+            return isEmployee || await IsManagerOrAbove(userManager, user);
         }
     }
 }
