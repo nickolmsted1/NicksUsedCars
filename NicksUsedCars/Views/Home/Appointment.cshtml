@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewData["Title"] = "Appointment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Appointment</h1>
+@{ var today = DateTime.Now;}
+
+<form>
+    <table class="table-bordered">
+        <thead>
+            <tr>
+                <th class="bg-dark">@today.DayOfWeek @today.Month/@today.Day</th>
+                <th class="bg-dark">@{today = today.AddDays(1.0);} @today.DayOfWeek @today.Month/@today.Day</th>
+                <th class="bg-dark">@{today = today.AddDays(1.0);} @today.DayOfWeek @today.Month/@today.Day</th>
+                <th class="bg-dark">@{today = today.AddDays(1.0);} @today.DayOfWeek @today.Month/@today.Day</th>
+                <th class="bg-dark">@{today = today.AddDays(1.0);} @today.DayOfWeek @today.Month/@today.Day</th>
+                <th class="bg-dark">@{today = today.AddDays(1.0);} @today.DayOfWeek @today.Month/@today.Day</th>
+                <th class="bg-dark">@{today = today.AddDays(1.0);} @today.DayOfWeek @today.Month/@today.Day</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (double i = 7.0; i <= 15.0; i += 0.5)
+            {
+                <tr>
+                    @for (int j = 0; j < 7; j++)
+                    {
+                        if (i % 1 == 0)
+                        { 
+                            <td><a class="btn btn-success">@i:00</a></td> 
+                        }
+
+                        else
+                        {-
+                            int round = (int)Math.Floor(i);
+
+                            <td ><a class="btn">@round:30</a></td>
+                        }
+                    }
+                </tr>
+             }
+        </tbody>
+    </table>
+</form>

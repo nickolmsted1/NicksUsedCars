@@ -30,6 +30,11 @@ namespace NicksUsedCars.Controllers
             return View();
         }
 
+        public IActionResult Appointment()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
