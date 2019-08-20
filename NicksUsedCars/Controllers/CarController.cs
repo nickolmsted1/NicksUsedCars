@@ -101,5 +101,11 @@ namespace NicksUsedCars.Controllers
             VehicleHelper.AddPhoto(v, _Env, _Context);
             return View();
         }
+
+        public IActionResult SelectedVehicle(int id)
+        {
+            Vehicle v = VehicleDb.GetSingleVehicle(id, _Context);
+            return View(v);
+        }
     }
 }

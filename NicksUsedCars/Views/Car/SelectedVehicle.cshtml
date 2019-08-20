@@ -1,0 +1,97 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model NicksUsedCars.Models.Vehicle
+@inject UserManager<ApplicationUser> _userManager
+
+@{
+    ViewData["Title"] = "SelectedVehicle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@Model.GetVehicleName()</h1>
+
+<div>
+    <h4>Vehicle</h4>
+    <hr />
+    <a asp-action="Index">Back to Vehicles</a>
+    <dl class="row">
+        <dd class="col-md-4">
+            <img src="~/@Model.PhotoUrl" alt="@Model.GetVehicleName()" />
+        </dd>
+        <dt class="col-md-2 border-right">
+            <!--1-->
+            @Html.DisplayNameFor(model => model.StockNumber)
+            <br /><!--2-->
+            @Html.DisplayNameFor(model => model.Vin)
+            <br /><!--3-->
+            @Html.DisplayNameFor(model => model.ManufacturedYear)
+            <br /><!--4-->
+            @Html.DisplayNameFor(model => model.Manufacturer)
+            <br /><!--5-->
+            @Html.DisplayNameFor(model => model.Model)
+            <br /><!--6-->
+            @Html.DisplayNameFor(model => model.ModelType)
+            <br /><!--7-->
+            Engine <!--Fuel type, eng config, size, HP-->
+            <br /><!--8-->
+            @Html.DisplayNameFor(model => model.TransmissionType)
+            <br /><!--9-->
+            @Html.DisplayNameFor(model => model.DriveType)
+            <br /><!--10-->
+            @Html.DisplayNameFor(model => model.ExteriorColor)
+            <br /><!--11-->
+            @Html.DisplayNameFor(model => model.InteriorColor)
+            <br /><!--12-->
+            @Html.DisplayNameFor(model => model.Mileage)
+            <br /><!--13-->
+            @Html.DisplayNameFor(model => model.BodyStyle)
+        </dt>
+        <dd class="col-md-2">
+            <!--1-->
+            @Html.DisplayFor(model => model.StockNumber)
+            <br /><!--2-->
+            @Html.DisplayFor(model => model.Vin)
+            <br /><!--3-->
+            @Html.DisplayFor(model => model.ManufacturedYear)
+            <br /><!--4-->
+            @Html.DisplayFor(model => model.Manufacturer)
+            <br /><!--5-->
+            @Html.DisplayFor(model => model.Model)
+            <br /><!--6-->
+            @Html.DisplayFor(model => model.ModelType)
+            <br /><!--7-->
+            @Html.DisplayFor(model => model.FuelType) @Html.DisplayFor(model => model.EngineConfiguration) @Html.DisplayFor(model => model.EngineSize)L /
+            @Html.DisplayFor(model => model.Horsepower) HP
+            <br /><!--8-->
+            @Html.DisplayFor(model => model.TransmissionType)
+            <br /><!--9-->
+            @Html.DisplayFor(model => model.DriveType)
+            <br /><!--10-->
+            @Html.DisplayFor(model => model.ExteriorColor)
+            <br /><!--11-->
+            @Html.DisplayFor(model => model.InteriorColor)
+            <br /><!--12-->
+            @Html.DisplayFor(model => model.Mileage)
+            <br /><!--13-->
+            @Html.DisplayFor(model => model.BodyStyle)
+        </dd>
+        <dt class="col-md-2 text-center h4 border-left">
+            @Html.DisplayNameFor(model => model.Price)
+            <hr />
+            @if (await IdentityExtension.IsCustomer(_userManager, await _userManager.GetUserAsync(User)))
+            {
+                <a class="btn btn-primary align-items-center" asp-action="CustomerInterestedInVehicle" asp-route-id="@Model.StockNumber">Request Salesman</a>
+            }
+                
+
+
+        </dt>
+        <dd class="col-md-2 h4">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
