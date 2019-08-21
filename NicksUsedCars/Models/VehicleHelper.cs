@@ -14,22 +14,24 @@ namespace NicksUsedCars.Models
     public static class VehicleHelper
     {
         // set max size for image to be 500pixels each side
-        private const int BigImageLength = 500;
+        private const int BigImageLength = 200;
         // max size for small image to be 200pixels each side
-        private const int SmallImageLength = 200;
+        private const int SmallImageLength = 75;
 
         public static async void AddPhoto(Vehicle v, IHostingEnvironment env, NicksUsedCarsContext context)
         {
             // save photo to images and connect it to smallPhotoUrl in database
             await SavePhoto(v, env, context);
+            
+            string smallFilePath = Path.Combine(env.WebRootPath, v.SmallPhotoUrl);
             // load image  to be resized
             using (Image<Rgba32> image = Image.Load(v.Photo.FileName))
-                ResizePhoto(v, v.SmallPhotoUrl, SmallImageLength, image);
+                ResizePhoto(v, smallFilePath, SmallImageLength, image);
 
-            
+            string filePath = Path.Combine(env.WebRootPath, v.PhotoUrl);
             // load image to be resized
             using (Image<Rgba32> image = Image.Load(v.Photo.FileName))
-                ResizePhoto(v, v.PhotoUrl, BigImageLength, image);
+                ResizePhoto(v, filePath, BigImageLength, image);
 
         }
 
@@ -87,7 +89,7 @@ namespace NicksUsedCars.Models
             // resize image to options set
             image.Mutate(ctx => ctx.Resize(photoUrlResize));
             // save image to same location loaded from
-            image.Save(v.Photo.FileName);
+            image.Save(photoUrl);
         }
     }
 }

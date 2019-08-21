@@ -9,6 +9,14 @@
 }
 else
 {
+    <script>
+        function bgChange(x) {
+            $(x).addClass("bg-secondary");
+        }
+        function removeClass(x) {
+            $(x).removeClass("bg-secondary");
+        }
+    </script>
     <table class="table">
         <thead>
             <tr>
@@ -16,119 +24,50 @@ else
                     <p>image</p>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.StockNumber)
+                    Vehicle
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Vin)
+                    Options
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Manufacturer)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Model)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ModelType)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ManufacturedYear)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.BodyStyle)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TransmissionType)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DriveType)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ExteriorColor)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.InteriorColor)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Mileage)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FuelType)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EngineConfiguration)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EngineSize)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Horsepower)
-                </th>
-                <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="bg-light">
             @foreach (var item in Model)
             {
-                <tr>
+                <tr class="" onmouseover="bgChange(this)" onmouseout="removeClass(this)">
+
                     <td>
                         <img src="~/@item.SmallPhotoUrl" alt="@item.GetVehicleName()" />
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StockNumber)
+                    <td class="container">
+                        <p class="align-text-top font-weight-bold">@item.GetVehicleName()</p>
+                        <div class="row">
+                            <div class="col-auto">
+                                <p>Price: $@item.Price</p>
+                                <p>Mileage: @item.Mileage</p>
+                                <p>Engine: @item.EngineSize @item.EngineConfiguration</p>
+                                <p>Transmission: @item.TransmissionType</p>
+                            </div>
+                            <div class="col-auto">
+                                <p>Ext. color: @item.ExteriorColor</p>
+                                <p>Int. color: @item.InteriorColor</p>
+                                <p>VIN: @item.Vin</p>
+                                <p>Drivetrain: @item.DriveType</p>
+                            </div>
+                            
+                        </div>
+                        
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Vin)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Manufacturer)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Model)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ModelType)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ManufacturedYear)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BodyStyle)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TransmissionType)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DriveType)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ExteriorColor)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.InteriorColor)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Mileage)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FuelType)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EngineConfiguration)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EngineSize)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Horsepower)
-                    </td>
-                    <td>
-                        <a class="btn btn-primary" asp-controller="Car" asp-action="Edit" asp-route-id="@item.StockNumber">Edit</a> |
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        <a class="btn btn-primary" asp-action="SelectedVehicle" asp-route-id="@item.StockNumber">View Vehicle</a>
+                        <a class="btn btn-primary" asp-controller="Car" asp-action="Edit" asp-route-id="@item.StockNumber">Edit</a> 
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) 
                         @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                     </td>
                 </tr>
             }
 
-        </tbody>
+</tbody>
     </table>
+
 }

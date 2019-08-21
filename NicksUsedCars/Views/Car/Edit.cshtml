@@ -6,7 +6,11 @@
 
 <h1>Edit</h1>
 
-<h4>Vehicle</h4>
+<h4>@Model.GetVehicleName()</h4>
+@if (ViewData["UpdateMessage"] != null)
+{
+    <p>@ViewData["UpdateMessage"]</p>
+}
 <hr />
 
 <form asp-action="Edit" enctype="multipart/form-data">
