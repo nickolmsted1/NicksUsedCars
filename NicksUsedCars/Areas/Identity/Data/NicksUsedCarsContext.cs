@@ -25,8 +25,8 @@ namespace NicksUsedCars.Models
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public ICollection<VehicleWaitList> WaitLists { get; set; }
 
-        
     }
 
     public class MyUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<ApplicationUser>
@@ -67,6 +67,7 @@ namespace NicksUsedCars.Models
         }
 
         public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<VehicleWaitList> VehicleWaitList { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -74,6 +75,16 @@ namespace NicksUsedCars.Models
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+
+            builder.Entity<VehicleWaitList>().HasKey(key => new { key.UserId, key.VehicleId });
+            builder.Entity<VehicleWaitList>()
+                .HasOne(VehicleWaitList => VehicleWaitList.User)
+                .WithMany(AspNetUser => AspNetUser.WaitLists)
+                .HasForeignKey(VehicleWaitList => VehicleWaitList.UserId);
+            builder.Entity<VehicleWaitList>()
+                .HasOne(VehicleWaitList => VehicleWaitList.Vehicle)
+                .WithMany(Vehicle => Vehicle.WaitList)
+                .HasForeignKey(VehicleWaitList => VehicleWaitList.VehicleId);
         }
     }
 }

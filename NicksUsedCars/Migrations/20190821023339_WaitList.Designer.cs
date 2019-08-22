@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NicksUsedCars.Models;
 
 namespace NicksUsedCars.Migrations
 {
     [DbContext(typeof(NicksUsedCarsContext))]
-    partial class NicksUsedCarsContextModelSnapshot : ModelSnapshot
+    [Migration("20190821023339_WaitList")]
+    partial class WaitList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,6 +177,8 @@ namespace NicksUsedCars.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
+                    b.Property<int?>("VehicleStockNumber");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -184,6 +188,8 @@ namespace NicksUsedCars.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("VehicleStockNumber");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -243,19 +249,6 @@ namespace NicksUsedCars.Migrations
                     b.ToTable("Vehicles");
                 });
 
-            modelBuilder.Entity("NicksUsedCars.Models.VehicleWaitList", b =>
-                {
-                    b.Property<string>("UserId");
-
-                    b.Property<int>("VehicleId");
-
-                    b.HasKey("UserId", "VehicleId");
-
-                    b.HasIndex("VehicleId");
-
-                    b.ToTable("VehicleWaitList");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -301,17 +294,11 @@ namespace NicksUsedCars.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("NicksUsedCars.Models.VehicleWaitList", b =>
+            modelBuilder.Entity("NicksUsedCars.Models.ApplicationUser", b =>
                 {
-                    b.HasOne("NicksUsedCars.Models.ApplicationUser", "User")
-                        .WithMany("WaitLists")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("NicksUsedCars.Models.Vehicle", "Vehicle")
-                        .WithMany("WaitList")
-                        .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("NicksUsedCars.Models.Vehicle")
+                        .WithMany("WaitListForVehicle")
+                        .HasForeignKey("VehicleStockNumber");
                 });
 #pragma warning restore 612, 618
         }

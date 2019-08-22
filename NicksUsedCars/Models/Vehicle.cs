@@ -18,6 +18,10 @@ namespace NicksUsedCars.Models
 
     public class Vehicle
     {
+        //public Vehicle()
+        //{
+        //    WaitListForVehicle = new List<ApplicationUser>();
+        //}
         // Identifying what vehicle it is
         [Key]
         /// <summary>
@@ -143,7 +147,7 @@ namespace NicksUsedCars.Models
         [Range(0.0, 12)]
         [Display(Name = "Engine Size")]
         /// <summary>
-        /// size of engine in liters, followed by "L" to indicate size is in liters
+        /// size of engine in liters
         /// </summary>
         public double EngineSize { get; set; }
 
@@ -152,6 +156,9 @@ namespace NicksUsedCars.Models
         /// amount of power engine output is measured in horsepower
         /// </summary>
         public int Horsepower { get; set; }
+
+        public ICollection<VehicleWaitList> WaitList { get; set; }
+
 
         public string EngineToString()
         {
