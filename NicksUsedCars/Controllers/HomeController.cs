@@ -10,9 +10,17 @@ namespace NicksUsedCars.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly NicksUsedCarsContext _Context;
+
+        public HomeController (NicksUsedCarsContext context)
+        {
+            _Context = context;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var vehicles = VehicleDb.GetVehicleList(_Context);
+            return View(vehicles);
         }
 
         public IActionResult About()

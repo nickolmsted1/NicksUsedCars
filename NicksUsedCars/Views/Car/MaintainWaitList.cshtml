@@ -10,9 +10,7 @@
 
 <h1>MaintainWaitList</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -37,9 +35,8 @@
                 @user.FirstName @user.LastName
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <a class="btn btn-danger" asp-action="DeleteUserFromWaitList" asp-route-id="@user.Id" asp-route-vehicleId="@v.StockNumber">Delete</a>
             </td>
         </tr>
 }

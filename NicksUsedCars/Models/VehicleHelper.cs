@@ -14,9 +14,9 @@ namespace NicksUsedCars.Models
     public static class VehicleHelper
     {
         // set max size for image to be 500pixels each side
-        private const int BigImageLength = 200;
+        private const int BigImageLength = 500;
         // max size for small image to be 200pixels each side
-        private const int SmallImageLength = 75;
+        private const int SmallImageLength = 125;
 
         public static async void AddPhoto(Vehicle v, IHostingEnvironment env, NicksUsedCarsContext context)
         {

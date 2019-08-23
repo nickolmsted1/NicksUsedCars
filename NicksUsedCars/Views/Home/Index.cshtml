@@ -1,6 +1,9 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model IEnumerable<NicksUsedCars.Models.Vehicle>
+
+
 
 <div class="text-center">
     <h1 class="display-4">Nick's Used Car Dealership</h1>
@@ -10,3 +13,19 @@
         or come learn <a asp-action="About">about us</a> and why you should buy your next vehicle here
     </p>
 </div>
+@{ int cars = 0;}
+@foreach (var item in Model)
+{
+    cars++;
+    <div >
+        <div class="text-center">
+            <a class="btn" asp-controller="car" asp-action="SelectedVehicle" asp-route-id="@item.StockNumber"> | @item.GetVehicleName() | </a>
+            <br />
+            <img src="~/@item.PhotoUrl" alt="@item.GetVehicleName()" />
+        </div>
+    </div>
+    @if (cars == 10)
+    {
+        break;
+    }
+}

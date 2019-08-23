@@ -58,24 +58,36 @@ namespace NicksUsedCars.Models
 
         public static async Task<bool> IsAdmin(UserManager<ApplicationUser> userManager, ApplicationUser user)
         {
+            if (user == null)
+                return false;
+
             var isAdmin = await userManager.IsInRoleAsync(user, "Admin");
             return isAdmin;
         }
 
         public static async Task<bool> IsManagerOrAbove(UserManager<ApplicationUser> userManager, ApplicationUser user)
         {
+            if (user == null)
+                return false;
+
             var isManager = await userManager.IsInRoleAsync(user, "Manager");
             return isManager || await IsAdmin(userManager, user);
         }
 
         public static async Task<bool> IsEmployeeOrAbove(UserManager<ApplicationUser> userManager, ApplicationUser user)
         {
+            if (user == null)
+                return false;
+
             var isEmployee = await userManager.IsInRoleAsync(user, "Employee");
             return isEmployee || await IsManagerOrAbove(userManager, user);
         }
 
         public static async Task<bool> IsCustomer(UserManager<ApplicationUser> userManager, ApplicationUser user)
         {
+            if (user == null)
+                return false;
+
             var isCustomer = await userManager.IsInRoleAsync(user, "Customer");
             return isCustomer;
         }

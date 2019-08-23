@@ -30,9 +30,11 @@ namespace NicksUsedCars.Controllers
             return View(vehicleList);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            if (await IdentityExtension.IsManagerOrAbove(_UserManager, await _UserManager.GetUserAsync(User)))
+                return View();
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -61,11 +63,15 @@ namespace NicksUsedCars.Controllers
             return View(search);
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            Vehicle v = VehicleDb.GetSingleVehicle(id, _Context);
+            if (await IdentityExtension.IsManagerOrAbove(_UserManager, await _UserManager.GetUserAsync(User)))
+            {
+                Vehicle v = VehicleDb.GetSingleVehicle(id, _Context);
 
-            return View(v);
+                return View(v);
+            }
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -89,11 +95,37 @@ namespace NicksUsedCars.Controllers
             return View(v);
         }
 
-        public IActionResult AddPhotos(int id) 
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (await IdentityExtension.IsManagerOrAbove(_UserManager, await _UserManager.GetUserAsync(User)))
+            {
+                Vehicle v = VehicleDb.GetSingleVehicle(id, _Context);
+                return View(v);
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirm(int id)
         {
             Vehicle v = VehicleDb.GetSingleVehicle(id, _Context);
-
+            bool isDeleted = VehicleDb.Delete(v, _Context);
+            if (isDeleted)
+                ViewBag.DeleteMessage = "Vehicle was successfully deleted.";
+            else
+                ViewBag.DeleteMessage = "There was an issue with deleting this vehicle.";
             return View(v);
+        }
+
+        public async Task<IActionResult> AddPhotos(int id) 
+        {
+            if (await IdentityExtension.IsManagerOrAbove(_UserManager, await _UserManager.GetUserAsync(User)))
+            {
+                Vehicle v = VehicleDb.GetSingleVehicle(id, _Context);
+
+                return View(v);
+            }
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -124,6 +156,17 @@ namespace NicksUsedCars.Controllers
         {
             List<VehicleWaitList> waitList = VehicleDb.GetWaitListForVehicle(_Context, id);
             return View(waitList);
+        }
+
+        public IActionResult DeleteUserFromWaitList(string id, int vehicleId)
+        {
+            var user = new VehicleWaitList() {
+                UserId = id,
+                VehicleId = vehicleId
+            };
+            _Context.VehicleWaitList.Remove(user);
+            _Context.SaveChanges();
+            return RedirectToAction("MaintainWaitList");
         }
 
         public async Task<IActionResult> CustomerInterestedInVehicle(int id)

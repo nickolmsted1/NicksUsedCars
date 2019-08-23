@@ -18,11 +18,17 @@
 <div>
     <h4>Vehicle</h4>
     <hr />
-    <a asp-action="Index">Back to Vehicles</a>
+    <div class="row">
+        <a class="btn btn-outline-primary" asp-action="Index">Back to Vehicles</a>
+    </div>
+    
+    
     <dl class="row">
-        <dd class="col-md-4">
+        <dd class="col-md-6">
             <img src="~/@Model.PhotoUrl" alt="@Model.GetVehicleName()" />
         </dd>
+    
+
         <dt class="col-md-2 border-right">
             <!--1-->
             @Html.DisplayNameFor(model => model.StockNumber)
@@ -50,7 +56,7 @@
             @Html.DisplayNameFor(model => model.Mileage)
             <br /><!--13-->
             @Html.DisplayNameFor(model => model.BodyStyle)
-        </dt>
+    
         <dd class="col-md-2">
             <!--1-->
             @Html.DisplayFor(model => model.StockNumber)
@@ -80,16 +86,18 @@
             <br /><!--13-->
             @Html.DisplayFor(model => model.BodyStyle)
         </dd>
+    </dl>
+    <dl class="row">
         <dt class="col-md-2 text-center h4 border-left">
             @Html.DisplayNameFor(model => model.Price)
-                
+
             @if ((await IdentityExtension.IsCustomer(_userManager, await _userManager.GetUserAsync(User))) &&
-                   !(@IdentityExtension.IsUserInWaitList(_Context, Model.StockNumber, _userManager.GetUserId(User))))
+                  !(@IdentityExtension.IsUserInWaitList(_Context, Model.StockNumber, _userManager.GetUserId(User))))
             {
                 <a class="btn btn-primary align-items-center" asp-action="CustomerInterestedInVehicle" asp-route-id="@Model.StockNumber">Request Salesman</a>
             }
             @if ((await IdentityExtension.IsCustomer(_userManager, await _userManager.GetUserAsync(User))) &&
-               (@IdentityExtension.IsUserInWaitList(_Context, Model.StockNumber, _userManager.GetUserId(User))))
+              (@IdentityExtension.IsUserInWaitList(_Context, Model.StockNumber, _userManager.GetUserId(User))))
             {
                 <a class="btn btn-primary align-items-center disabled">Already on waitlist</a>
             }
@@ -104,6 +112,11 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+    @if (await IdentityExtension.IsManagerOrAbove(_userManager, await _userManager.GetUserAsync(User)))
+    {
+        <a class="btn btn-info" asp-action="Edit" asp-route-id="@Model.StockNumber">Edit</a> 
+        <br />
+    }
+
+    <a class="btn btn-outline-primary" asp-action="Index">Back to List</a>
 </div>
