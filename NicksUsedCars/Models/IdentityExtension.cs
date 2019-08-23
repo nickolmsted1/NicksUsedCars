@@ -79,5 +79,15 @@ namespace NicksUsedCars.Models
             var isCustomer = await userManager.IsInRoleAsync(user, "Customer");
             return isCustomer;
         }
+
+        public static bool IsUserInWaitList(NicksUsedCarsContext context, int vehicleId, string userId)
+        {
+            IQueryable<VehicleWaitList> users = context.VehicleWaitList.Select(p => p).Where(v => v.UserId == userId && v.VehicleId == vehicleId);
+            if (users != null && users.Count() > 0)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

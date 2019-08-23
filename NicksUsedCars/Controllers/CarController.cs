@@ -12,11 +12,13 @@ namespace NicksUsedCars.Controllers
     public class CarController : Controller
     {
         private readonly NicksUsedCarsContext _Context;
+        private readonly UserManager<ApplicationUser> _UserManager;
         private readonly IHostingEnvironment _Env;
 
-        public CarController(NicksUsedCarsContext dbContext, IHostingEnvironment env)
+        public CarController(NicksUsedCarsContext dbContext,UserManager<ApplicationUser> userManager, IHostingEnvironment env)
         {
             _Context = dbContext;
+            _UserManager = userManager;
             _Env = env;
         }
 
@@ -106,6 +108,37 @@ namespace NicksUsedCars.Controllers
         {
             Vehicle v = VehicleDb.GetSingleVehicle(id, _Context);
             return View(v);
+        }
+
+        public async Task<IActionResult> ViewVehicleWaitList()
+        {
+            if (await IdentityExtension.IsEmployeeOrAbove(_UserManager, await _UserManager.GetUserAsync(User)))
+            {
+                List<Vehicle> vehicles = VehicleDb.GetVehicleList(_Context);
+                return View(vehicles);
+            }
+            return RedirectToAction("SelectedVehicle");
+        }
+
+        public IActionResult MaintainWaitList(int id)
+        {
+            List<VehicleWaitList> waitList = VehicleDb.GetWaitListForVehicle(_Context, id);
+            return View(waitList);
+        }
+
+        public async Task<IActionResult> CustomerInterestedInVehicle(int id)
+        {
+            if (await IdentityExtension.IsCustomer(_UserManager, await _UserManager.GetUserAsync(User)))
+            {
+                Vehicle v = VehicleDb.GetSingleVehicle(id, _Context);
+                ApplicationUser user = await _UserManager.GetUserAsync(User);
+                VehicleDb.SaveToWaitList(_Context, user.Id, id);
+                int waitListLength = VehicleDb.NumUsersInVehicleWaitList(_Context, id);
+                string name = v.GetVehicleName();
+                ViewBag.AddedToVehicleList = $"Thank you for choosing {name}.\nYou are number {waitListLength} in the queue for this vehicle.";
+                return View(v);
+            }
+            return RedirectToAction("SelectedVehicle", new { id });
         }
     }
 }

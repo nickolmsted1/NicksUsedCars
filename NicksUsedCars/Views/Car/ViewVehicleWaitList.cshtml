@@ -1,0 +1,45 @@
+﻿@model IEnumerable<NicksUsedCars.Models.Vehicle>
+@inject NicksUsedCarsContext _Context
+
+@{
+    ViewData["Title"] = "ViewVehicleWaitList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Vehicle Wait Lists</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StockNumber)
+            </th>
+            <th>
+                Vehicle
+            </th>
+            <th>
+                People on waitlist
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockNumber)
+            </td>
+            <td>
+                @item.GetVehicleName()
+            </td>
+            <td>
+                @VehicleDb.NumUsersInVehicleWaitList(_Context, item.StockNumber)
+            </td>
+            <td>
+                <a class="btn btn-primary" asp-action="MaintainWaitList" asp-route-id="@item.StockNumber">Contact/Remove customer from waitlist</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

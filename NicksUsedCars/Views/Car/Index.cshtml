@@ -1,4 +1,6 @@
-﻿@model IEnumerable<NicksUsedCars.Models.Vehicle>
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<NicksUsedCars.Models.Vehicle>
+@inject UserManager<ApplicationUser> _UserManager
 
 @{
     ViewData["Title"] = "Index";
@@ -7,13 +9,26 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="row">
+    @if (await IdentityExtension.IsManagerOrAbove(_UserManager, await _UserManager.GetUserAsync(User)))
+    {
+        <div class="col-sm-2">
+            <a class="btn btn-success" asp-action="Create">Create New</a>
+        </div>
+    }
 
-<p>
-    <a class="btn" asp-action="Search">Search</a>
-</p>
+    @if (await IdentityExtension.IsEmployeeOrAbove(_UserManager, await _UserManager.GetUserAsync(User)))
+    {
+        <div class="col-sm-2">
+            <a class="btn btn-primary" asp-action="ViewVehicleWaitList">Vehicle Wait Lists</a>
+        </div>
+    }
+        <div class="col-sm-2">
+            <a class="btn btn-info" asp-action="Search">Search</a>
+        </div>
+</div>
+
+
 
 
 @await  Html.PartialAsync("_CarList", Model)

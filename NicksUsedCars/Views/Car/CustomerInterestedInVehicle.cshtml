@@ -1,0 +1,13 @@
+﻿@model NicksUsedCars.Models.Vehicle
+@{
+    ViewData["Title"] = "CustomerInterestedInVehicle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if(ViewBag.AddedToVehicleList != null)
+{
+    <h1>@ViewBag.AddedToVehicleList</h1>
+}
+<a class="btn btn-primary" asp-action="SelectedVehicle" asp-route-id="@Model.StockNumber">Back to Vehicle</a>
+
+

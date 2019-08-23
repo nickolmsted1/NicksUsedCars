@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @model NicksUsedCars.Models.Vehicle
 @inject UserManager<ApplicationUser> _userManager
+@inject NicksUsedCarsContext _Context
 
 @{
     ViewData["Title"] = "SelectedVehicle";
@@ -8,6 +9,11 @@
 }
 
 <h1>@Model.GetVehicleName()</h1>
+
+@if(ViewBag.AddedToVehicleList != null)
+{
+<h3>@ViewBag.AddedToVehicleList</h3>
+}
 
 <div>
     <h4>Vehicle</h4>
@@ -76,12 +82,18 @@
         </dd>
         <dt class="col-md-2 text-center h4 border-left">
             @Html.DisplayNameFor(model => model.Price)
-            <hr />
-            @if (await IdentityExtension.IsCustomer(_userManager, await _userManager.GetUserAsync(User)))
+                
+            @if ((await IdentityExtension.IsCustomer(_userManager, await _userManager.GetUserAsync(User))) &&
+                   !(@IdentityExtension.IsUserInWaitList(_Context, Model.StockNumber, _userManager.GetUserId(User))))
             {
                 <a class="btn btn-primary align-items-center" asp-action="CustomerInterestedInVehicle" asp-route-id="@Model.StockNumber">Request Salesman</a>
             }
-                
+            @if ((await IdentityExtension.IsCustomer(_userManager, await _userManager.GetUserAsync(User))) &&
+               (@IdentityExtension.IsUserInWaitList(_Context, Model.StockNumber, _userManager.GetUserId(User))))
+            {
+                <a class="btn btn-primary align-items-center disabled">Already on waitlist</a>
+            }
+
 
 
         </dt>

@@ -43,6 +43,43 @@ namespace NicksUsedCars.Models
             return context.Vehicles.Select(p => p.Model).ToList();
         }
 
+        public static void SaveToWaitList(NicksUsedCarsContext context, string userId, int vehicleId)
+        {
+            VehicleWaitList vwl = new VehicleWaitList
+            {
+                UserId = userId,
+                VehicleId = vehicleId
+            };
+            context.VehicleWaitList.Add(vwl);
+            context.SaveChanges();
+        }
+
+        public static void RemoveFromWaitList(NicksUsedCarsContext context, string userId, int vehicleId)
+        {
+            VehicleWaitList vwl = new VehicleWaitList
+            {
+                UserId = userId,
+                VehicleId = vehicleId
+            };
+            context.VehicleWaitList.Remove(vwl);
+            context.SaveChanges();
+        }
+
+        public static int NumUsersInVehicleWaitList(NicksUsedCarsContext context, int vehicleId)
+        {
+            IQueryable<VehicleWaitList> users = context.VehicleWaitList.Select(p => p);
+            users = from u in users
+                    where vehicleId == u.VehicleId
+                    select u;
+            return users.Count();
+        }
+
+        public static List<VehicleWaitList> GetWaitListForVehicle(NicksUsedCarsContext context, int vehicleId)
+        {
+            var waitlist = context.VehicleWaitList.Select(p => p).Where(p => p.VehicleId == vehicleId).ToList();
+            return waitlist;
+        }
+
         public static List<Vehicle> SearchVehicle(NicksUsedCarsContext context, SearchCriteria search)
         {
             IQueryable<Vehicle> vehicles = context.Vehicles.Select(p => p);
