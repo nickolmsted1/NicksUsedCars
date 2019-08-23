@@ -1,7 +1,9 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using Microsoft.AspNetCore.Identity
 @model IEnumerable<NicksUsedCars.Models.Vehicle>
+@inject UserManager<ApplicationUser> _UserManager
 
 <hr />
 
@@ -62,9 +64,11 @@ else
                     </td>
                     <td>
                         <a class="btn btn-primary" asp-action="SelectedVehicle" asp-route-id="@item.StockNumber">View Vehicle</a>
-                        <a class="btn btn-primary" asp-controller="Car" asp-action="Edit" asp-route-id="@item.StockNumber">Edit</a> 
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) 
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                        @if (await IdentityExtension.IsManagerOrAbove(_UserManager, await _UserManager.GetUserAsync(User)))
+                        {
+                            <a class="btn btn-primary" asp-controller="Car" asp-action="Edit" asp-route-id="@item.StockNumber">Edit</a>
+                            <a class="btn btn-danger" asp-controller="car" asp-action="Delete" asp-route-id="@item.StockNumber">Delete</a>
+                        }
                     </td>
                 </tr>
             }

@@ -68,6 +68,7 @@ namespace NicksUsedCars.Models
 
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<VehicleWaitList> VehicleWaitList { get; set; }
+        public DbSet<SoldVehicle> SoldVehicles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -85,6 +86,11 @@ namespace NicksUsedCars.Models
                 .HasOne(VehicleWaitList => VehicleWaitList.Vehicle)
                 .WithMany(Vehicle => Vehicle.WaitList)
                 .HasForeignKey(VehicleWaitList => VehicleWaitList.VehicleId);
+
+            //builder.Entity<SoldVehicle>().HasKey(key => new { key.UserId });
+            //builder.Entity<SoldVehicle>()
+            //    .HasMany(SoldVehicle => SoldVehicle.UserId)
+            //    .WithOne(AspNetUser => AspNetUser.)
         }
     }
 }

@@ -21,6 +21,15 @@ namespace NicksUsedCars.Models
             return v;
         }
 
+        public static bool Delete(Vehicle v, NicksUsedCarsContext context)
+        {
+            context.Vehicles.Remove(v);
+            var result = context.SaveChanges();
+            if (result == 0)
+                return false;
+            return true;
+        }
+
         public static Vehicle GetSingleVehicle(int id, NicksUsedCarsContext context)
         {
             Vehicle v = context.Vehicles.Where(p => p.StockNumber == id).Single();
