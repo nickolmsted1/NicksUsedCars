@@ -18,7 +18,11 @@
 <div>
     <h4>Vehicle</h4>
     <hr />
-    <a asp-action="Index">Back to Vehicles</a>
+    <div class="row">
+        <a class="btn btn-outline-primary" asp-action="Index">Back to Vehicles</a>
+    </div>
+    
+    
     <dl class="row">
         <dd class="col-md-6">
             <img src="~/@Model.PhotoUrl" alt="@Model.GetVehicleName()" />
@@ -110,9 +114,9 @@
 <div>
     @if (await IdentityExtension.IsManagerOrAbove(_userManager, await _userManager.GetUserAsync(User)))
     {
-        <a asp-action="Edit">Edit</a> 
+        <a class="btn btn-info" asp-action="Edit" asp-route-id="@Model.StockNumber">Edit</a> 
         <br />
     }
 
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-outline-primary" asp-action="Index">Back to List</a>
 </div>

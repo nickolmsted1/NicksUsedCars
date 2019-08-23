@@ -124,7 +124,7 @@ namespace NicksUsedCars.Controllers
                 // keeps track if adding new role is successful
                 IdentityResult newRoleResult = null;
 
-                if (newUserRole.OldRoles != null)
+                if (newUserRole.OldRoles != null && newUserRole.OldRoles.Count > 0)
                 {
                     // number of roles user is in (should only be 1)
                     int roles = newUserRole.OldRoles.Count;
@@ -145,7 +145,7 @@ namespace NicksUsedCars.Controllers
                 }
 
                 // return success message to page
-                if (removeRoleResult.Succeeded && newRoleResult.Succeeded && await _UserManager.IsInRoleAsync(user, newUserRole.RoleName))
+                if (removeRoleResult.Succeeded && newRoleResult.Succeeded /*&& await _UserManager.IsInRoleAsync(user, newUserRole.RoleName)*/)
                 {
                     ViewBag.RoleChangeSuccess = $"{newUserRole.FullName}'s new role is {newUserRole.RoleName}.";
                     return View(newUserRole);

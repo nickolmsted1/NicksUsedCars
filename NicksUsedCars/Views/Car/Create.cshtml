@@ -13,6 +13,9 @@
 }
 
 <h4>Vehicle</h4>
+
+<a class="btn btn-outline-primary" asp-action="Index">Back to List</a>
+
 <hr />
 
 <div class="container">
@@ -64,7 +67,7 @@
                         {
                             <option value="@Enum.GetName(typeof(Transmission), i)">@Enum.GetName(typeof(Transmission), i) </option>
                         }
-                        <option value="null">Any</option>
+                        <option value="null">Not Available</option>
                     </select>
                     <span asp-validation-for="TransmissionType" class="text-danger"></span>
                 </div>
@@ -75,6 +78,7 @@
                         {
                             <option value="@Enum.GetName(typeof(Drive), i)">@Enum.GetName(typeof(Drive), i) </option>
                         }
+                        <option value="null">Not Available</option>
                     </select>
                     <span asp-validation-for="DriveType" class="text-danger"></span>
                 </div>
@@ -103,6 +107,7 @@
                         {
                             <option value="@Enum.GetName(typeof(Fuel), i)">@Enum.GetName(typeof(Fuel), i) </option>
                         }
+                        <option value="null">Not Available</option>
                     </select>
                     <span asp-validation-for="FuelType" class="text-danger"></span>
                 </div>
@@ -113,6 +118,7 @@
                         {
                             <option value="@Enum.GetName(typeof(Engine), i)">@Enum.GetName(typeof(Engine), i) </option>
                         }
+                        <option value="null">Not Available</option>
                     </select>
                     <span asp-validation-for="EngineConfiguration" class="text-danger"></span>
                 </div>
@@ -135,7 +141,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-outline-primary" asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

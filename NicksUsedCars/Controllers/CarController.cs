@@ -158,6 +158,17 @@ namespace NicksUsedCars.Controllers
             return View(waitList);
         }
 
+        public IActionResult DeleteUserFromWaitList(string id, int vehicleId)
+        {
+            var user = new VehicleWaitList() {
+                UserId = id,
+                VehicleId = vehicleId
+            };
+            _Context.VehicleWaitList.Remove(user);
+            _Context.SaveChanges();
+            return RedirectToAction("MaintainWaitList");
+        }
+
         public async Task<IActionResult> CustomerInterestedInVehicle(int id)
         {
             if (await IdentityExtension.IsCustomer(_UserManager, await _UserManager.GetUserAsync(User)))
